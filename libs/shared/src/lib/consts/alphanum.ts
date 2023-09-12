@@ -1,0 +1,6 @@
+export const AUTH_MICROSERVICE = Symbol('AUTH_MICROSERVICE');
+export const CREATE_USER = 'CREATE_USER';
+export const GET_USER = 'GET_USER';
+
+export const PAYMENT_MICROSERVICE = Symbol('PAYMENT_MICROSERVICE');
+export const PROCESS_PAYMENT = 'PROCESS_PAYMENT';
