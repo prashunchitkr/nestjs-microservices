@@ -10,6 +10,6 @@ export class AppController {
 
   @EventPattern(PROCESS_PAYMENT)
   handleProcessPayment(@Payload(ValidationPipe) data: MakePaymentDto) {
-    this.appService.processPayment(data);
+    return this.appService.processPayment(data);
   }
 }

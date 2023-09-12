@@ -1,6 +1,7 @@
 import { AUTH_MICROSERVICE, GET_USER, MakePaymentDto, User } from '@/shared';
-import { Inject, Injectable, Logger, OnModuleInit } from '@nestjs/common';
+import { Inject, Injectable, Logger } from '@nestjs/common';
 import { ClientRedis } from '@nestjs/microservices';
+import { map } from 'rxjs';
 
 @Injectable()
 export class AppService {
@@ -12,12 +13,13 @@ export class AppService {
 
   processPayment(makePaymentDto: MakePaymentDto) {
     const { userId, amount } = makePaymentDto;
-    this.authClient
+    return this.authClient
       .send<User>(GET_USER, JSON.stringify({ userId }))
-      .subscribe((user) => {
-        this.logger.debug(
-          `Process payment for user ${user.name} -- amount: ${amount}`
-        );
-      });
+      .pipe(
+        map((user) => ({
+          user,
+          amount,
+        }))
+      );
   }
 }

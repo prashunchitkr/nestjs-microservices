@@ -15,6 +15,6 @@ export class PaymentService {
   ) {}
 
   makePayment(makePaymentDto: MakePaymentDto) {
-    this.paymentClient.emit(PROCESS_PAYMENT, JSON.stringify(makePaymentDto));
+    return this.paymentClient.send(PROCESS_PAYMENT, makePaymentDto);
   }
 }

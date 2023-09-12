@@ -4,3 +4,5 @@ export const GET_USER = 'GET_USER';
 
 export const PAYMENT_MICROSERVICE = Symbol('PAYMENT_MICROSERVICE');
 export const PROCESS_PAYMENT = 'PROCESS_PAYMENT';
+
+export const APPLICATION_JSON = 'application/json';
