@@ -8,7 +8,7 @@ import { NestFactory } from '@nestjs/core';
 
 import { AppModule } from './app/app.module';
 import { ConfigService } from '@nestjs/config';
-import { GatewayConfig, configKeys } from '@/shared';
+import { GatewayConfig, RpcExceptionFilter, configKeys } from '@/shared';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
@@ -21,6 +21,7 @@ async function bootstrap() {
       transform: true,
     })
   );
+  app.useGlobalFilters(new RpcExceptionFilter());
 
   const appConfig = app.get(ConfigService);
   const { host, port } = appConfig.get<GatewayConfig>(configKeys.gateway);

@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { AppController } from './payments.controller';
+import { AppService } from './payments.service';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { AUTH_MICROSERVICE } from '@/shared';
 

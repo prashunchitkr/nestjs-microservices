@@ -1,5 +1,5 @@
 import { APPLICATION_JSON, MakePaymentDto } from '@/shared';
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Logger, Post } from '@nestjs/common';
 import { ApiConsumes, ApiProduces, ApiTags } from '@nestjs/swagger';
 import { PaymentService } from './payments.service';
 
@@ -8,10 +8,11 @@ import { PaymentService } from './payments.service';
 @ApiProduces(APPLICATION_JSON)
 @ApiConsumes(APPLICATION_JSON)
 export class PaymentsController {
+  private readonly logger = new Logger(PaymentsController.name);
   constructor(private readonly paymentService: PaymentService) {}
 
   @Post('pay')
-  makePayment(@Body() MakePaymentDto: MakePaymentDto) {
-    return this.paymentService.makePayment(MakePaymentDto);
+  makePayment(@Body() makePaymentDto: MakePaymentDto) {
+    return this.paymentService.makePayment(makePaymentDto);
   }
 }
