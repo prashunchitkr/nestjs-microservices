@@ -2,6 +2,7 @@ import {
   MakePaymentDto,
   PAYMENT_MICROSERVICE,
   PROCESS_PAYMENT,
+  PaymentResponseDto,
 } from '@/shared';
 import { Inject, Injectable } from '@nestjs/common';
 
@@ -15,6 +16,9 @@ export class PaymentService {
   ) {}
 
   makePayment(makePaymentDto: MakePaymentDto) {
-    return this.paymentClient.send(PROCESS_PAYMENT, makePaymentDto);
+    return this.paymentClient.send<PaymentResponseDto>(
+      PROCESS_PAYMENT,
+      makePaymentDto
+    );
   }
 }

@@ -1,4 +1,11 @@
-import { IsNotEmpty, IsNumber, IsString, IsUUID } from 'class-validator';
+import {
+  IsNotEmpty,
+  IsNumber,
+  IsString,
+  IsUUID,
+  ValidateNested,
+} from 'class-validator';
+import { User } from '../entities';
 
 export class MakePaymentDto {
   @IsNotEmpty()
@@ -8,5 +15,13 @@ export class MakePaymentDto {
 
   @IsNotEmpty()
   @IsNumber({ maxDecimalPlaces: 2 })
+  amount: number;
+}
+
+export class PaymentResponseDto {
+  @ValidateNested()
+  user: User;
+
+  @IsNumber()
   amount: number;
 }

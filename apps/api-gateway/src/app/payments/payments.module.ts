@@ -2,6 +2,7 @@ import { PAYMENT_MICROSERVICE } from '@/shared';
 import { Module } from '@nestjs/common';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { PaymentService } from './payments.service';
+import { PaymentsController } from './payments.controller';
 
 @Module({
   imports: [
@@ -17,5 +18,6 @@ import { PaymentService } from './payments.service';
     ]),
   ],
   providers: [PaymentService],
+  controllers: [PaymentsController],
 })
 export class PaymentsModule {}

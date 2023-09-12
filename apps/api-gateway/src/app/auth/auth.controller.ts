@@ -1,8 +1,9 @@
-import { Body, Controller, Post, ValidationPipe } from '@nestjs/common';
-import { AuthService } from './auth.service';
 import { APPLICATION_JSON, CreateUserDto } from '@/shared';
-import { ApiConsumes, ApiProduces } from '@nestjs/swagger';
+import { Body, Controller, Post } from '@nestjs/common';
+import { ApiConsumes, ApiProduces, ApiTags } from '@nestjs/swagger';
+import { AuthService } from './auth.service';
 
+@ApiTags('Auth')
 @Controller('auth')
 @ApiConsumes(APPLICATION_JSON)
 @ApiProduces(APPLICATION_JSON)
@@ -10,7 +11,7 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('sign-up')
-  createUser(@Body(ValidationPipe) createUserDto: CreateUserDto) {
+  createUser(@Body() createUserDto: CreateUserDto) {
     return this.authService.createUser(createUserDto);
   }
 }
