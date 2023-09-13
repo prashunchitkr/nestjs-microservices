@@ -8,20 +8,22 @@ import { NestFactory } from '@nestjs/core';
 
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 import { PaymentModule } from './app/payment.module';
+import { ConfigService } from '@nestjs/config';
+import { RedisConfig, configKeys } from '@/shared';
 
 async function bootstrap() {
-  const app = await NestFactory.createMicroservice<MicroserviceOptions>(
-    PaymentModule,
-    {
-      transport: Transport.REDIS,
-      options: {
-        host: 'localhost',
-        port: 6379,
-      },
-    }
-  );
+  const app = await NestFactory.create(PaymentModule);
 
-  await app.listen();
+  const config = app.get(ConfigService);
+  const redisConfig = config.get<RedisConfig>(configKeys.redis);
+  if (!redisConfig) throw new Error('Redis not configured');
+
+  app.connectMicroservice<MicroserviceOptions>({
+    transport: Transport.REDIS,
+    options: redisConfig,
+  });
+
+  await app.startAllMicroservices();
   Logger.log(`✨ Payments MicroService Running`);
 }
 

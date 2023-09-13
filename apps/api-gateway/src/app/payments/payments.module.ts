@@ -1,21 +1,14 @@
-import { PAYMENT_MICROSERVICE } from '@/shared';
+import { PAYMENT_MICROSERVICE, registerRedisClientOptions } from '@/shared';
 import { Module } from '@nestjs/common';
-import { ClientsModule, Transport } from '@nestjs/microservices';
-import { PaymentService } from './payments.service';
+import { ClientsModule } from '@nestjs/microservices';
 import { PaymentsController } from './payments.controller';
+import { PaymentService } from './payments.service';
 
 @Module({
   imports: [
-    ClientsModule.register([
-      {
-        name: PAYMENT_MICROSERVICE,
-        transport: Transport.REDIS,
-        options: {
-          host: 'localhost',
-          port: 6379,
-        },
-      },
-    ]),
+    ClientsModule.registerAsync(
+      registerRedisClientOptions([PAYMENT_MICROSERVICE])
+    ),
   ],
   providers: [PaymentService],
   controllers: [PaymentsController],

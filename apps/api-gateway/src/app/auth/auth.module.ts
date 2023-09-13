@@ -1,21 +1,14 @@
-import { AUTH_MICROSERVICE } from '@/shared';
+import { AUTH_MICROSERVICE, registerRedisClientOptions } from '@/shared';
 import { Module } from '@nestjs/common';
-import { ClientsModule, Transport } from '@nestjs/microservices';
+import { ClientsModule } from '@nestjs/microservices';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 
 @Module({
   imports: [
-    ClientsModule.register([
-      {
-        name: AUTH_MICROSERVICE,
-        transport: Transport.REDIS,
-        options: {
-          host: 'localhost',
-          port: 6379,
-        },
-      },
-    ]),
+    ClientsModule.registerAsync(
+      registerRedisClientOptions([AUTH_MICROSERVICE])
+    ),
   ],
   controllers: [AuthController],
   providers: [AuthService],

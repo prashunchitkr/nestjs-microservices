@@ -6,23 +6,24 @@
 import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 
-import { AppModule } from './app/auth.module';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
-import { RpcExceptionFilter } from '@/shared';
+import { AppModule } from './app/auth.module';
+import { RedisConfig, configKeys } from '@/shared';
+import { ConfigService } from '@nestjs/config';
 
 async function bootstrap() {
-  const app = await NestFactory.createMicroservice<MicroserviceOptions>(
-    AppModule,
-    {
-      transport: Transport.REDIS,
-      options: {
-        host: 'localhost',
-        port: 6379,
-      },
-    }
-  );
+  const app = await NestFactory.create(AppModule);
 
-  await app.listen();
+  const config = app.get(ConfigService);
+  const redisConfig = config.get<RedisConfig>(configKeys.redis);
+  if (!redisConfig) throw new Error('Redis not configured');
+
+  app.connectMicroservice<MicroserviceOptions>({
+    transport: Transport.REDIS,
+    options: redisConfig,
+  });
+
+  await app.startAllMicroservices();
 
   Logger.log('✨ Auth MicroService Started');
 }
