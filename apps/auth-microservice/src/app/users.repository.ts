@@ -1,5 +1,6 @@
 import { User } from '@/shared';
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable, Logger, NotFoundException } from '@nestjs/common';
+import { RpcException } from '@nestjs/microservices';
 import { v4 as uuidV4 } from 'uuid';
 
 @Injectable()
@@ -13,7 +14,9 @@ export class UsersRepository {
     return newUser;
   }
 
-  findOne(id: string): User | null {
-    return this.users.find((u) => u.id === id) || null;
+  findOne(id: string): User {
+    const user = this.users.find((u) => u.id === id);
+    if (!user) throw new RpcException(new NotFoundException('User Not Found'));
+    return user;
   }
 }

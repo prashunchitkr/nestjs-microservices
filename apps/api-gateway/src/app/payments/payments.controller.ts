@@ -4,7 +4,7 @@ import { ApiConsumes, ApiProduces, ApiTags } from '@nestjs/swagger';
 import { PaymentService } from './payments.service';
 
 @ApiTags('Payment')
-@Controller('payments')
+@Controller('payment')
 @ApiProduces(APPLICATION_JSON)
 @ApiConsumes(APPLICATION_JSON)
 export class PaymentsController {

@@ -6,13 +6,12 @@
 import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 
-import { AppModule } from './app/payments.module';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
-import { RpcExceptionFilter } from '@/shared';
+import { PaymentModule } from './app/payment.module';
 
 async function bootstrap() {
   const app = await NestFactory.createMicroservice<MicroserviceOptions>(
-    AppModule,
+    PaymentModule,
     {
       transport: Transport.REDIS,
       options: {
@@ -21,8 +20,6 @@ async function bootstrap() {
       },
     }
   );
-
-  app.useGlobalFilters(new RpcExceptionFilter());
 
   await app.listen();
   Logger.log(`✨ Payments MicroService Running`);

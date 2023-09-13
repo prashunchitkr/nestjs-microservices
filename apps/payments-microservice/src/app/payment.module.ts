@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 
-import { AppController } from './payments.controller';
-import { AppService } from './payments.service';
+import { PaymentController } from './payment.controller';
+import { PaymentService } from './payment.service';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { AUTH_MICROSERVICE } from '@/shared';
 
@@ -18,7 +18,7 @@ import { AUTH_MICROSERVICE } from '@/shared';
       },
     ]),
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [PaymentController],
+  providers: [PaymentService],
 })
-export class AppModule {}
+export class PaymentModule {}

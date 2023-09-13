@@ -13,18 +13,19 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
+  const appConfig = app.get(ConfigService);
+  const { host, port } = appConfig.get<GatewayConfig>(configKeys.gateway);
   const globalPrefix = 'api';
+
   app.setGlobalPrefix(globalPrefix);
+  app.useGlobalFilters(new RpcExceptionFilter());
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,
       transform: true,
     })
   );
-  app.useGlobalFilters(new RpcExceptionFilter());
-
-  const appConfig = app.get(ConfigService);
-  const { host, port } = appConfig.get<GatewayConfig>(configKeys.gateway);
 
   const swaggerConfig = new DocumentBuilder()
     .setTitle('Microservices Test')

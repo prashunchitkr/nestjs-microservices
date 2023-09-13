@@ -6,7 +6,8 @@ import {
 } from '@/shared';
 import { Inject, Injectable } from '@nestjs/common';
 
-import { ClientRedis } from '@nestjs/microservices';
+import { ClientRedis, RpcException } from '@nestjs/microservices';
+import { catchError, throwError } from 'rxjs';
 
 @Injectable()
 export class PaymentService {
@@ -16,9 +17,10 @@ export class PaymentService {
   ) {}
 
   makePayment(makePaymentDto: MakePaymentDto) {
-    return this.paymentClient.send<PaymentResponseDto>(
-      PROCESS_PAYMENT,
-      makePaymentDto
-    );
+    return this.paymentClient
+      .send<PaymentResponseDto>(PROCESS_PAYMENT, makePaymentDto)
+      .pipe(
+        catchError((err) => throwError(() => new RpcException(err.response)))
+      );
   }
 }
