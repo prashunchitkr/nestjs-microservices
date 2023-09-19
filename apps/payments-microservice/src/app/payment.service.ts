@@ -1,15 +1,13 @@
-import { AUTH_MICROSERVICE, GET_USER, MakePaymentDto, User } from '@/shared';
+import { AUTH_QUEUE, GET_USER, MakePaymentDto, User } from '@/shared';
 import { Inject, Injectable, Logger } from '@nestjs/common';
-import { ClientRedis, RpcException } from '@nestjs/microservices';
+import { ClientRMQ, RpcException } from '@nestjs/microservices';
 import { catchError, map, tap, throwError } from 'rxjs';
 
 @Injectable()
 export class PaymentService {
   private readonly logger = new Logger(PaymentService.name);
 
-  constructor(
-    @Inject(AUTH_MICROSERVICE) private readonly authClient: ClientRedis
-  ) {}
+  constructor(@Inject(AUTH_QUEUE) private readonly authClient: ClientRMQ) {}
 
   processPayment(makePaymentDto: MakePaymentDto) {
     const { userId, amount } = makePaymentDto;

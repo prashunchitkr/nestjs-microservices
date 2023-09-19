@@ -1,19 +1,19 @@
 import {
   MakePaymentDto,
-  PAYMENT_MICROSERVICE,
+  PAYMENT_QUEUE,
   PROCESS_PAYMENT,
   PaymentResponseDto,
 } from '@/shared';
 import { Inject, Injectable } from '@nestjs/common';
 
-import { ClientRedis, RpcException } from '@nestjs/microservices';
+import { ClientRMQ, RpcException } from '@nestjs/microservices';
 import { catchError, throwError } from 'rxjs';
 
 @Injectable()
 export class PaymentService {
   constructor(
-    @Inject(PAYMENT_MICROSERVICE)
-    private readonly paymentClient: ClientRedis
+    @Inject(PAYMENT_QUEUE)
+    private readonly paymentClient: ClientRMQ
   ) {}
 
   makePayment(makePaymentDto: MakePaymentDto) {

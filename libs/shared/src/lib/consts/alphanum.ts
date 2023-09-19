@@ -6,3 +6,6 @@ export const PAYMENT_MICROSERVICE = Symbol('PAYMENT_MICROSERVICE');
 export const PROCESS_PAYMENT = 'PROCESS_PAYMENT';
 
 export const APPLICATION_JSON = 'application/json';
+
+export const AUTH_QUEUE = 'AUTH_QUEUE' as const;
+export const PAYMENT_QUEUE = 'PAYMENT_QUEUE' as const;

@@ -7,3 +7,10 @@ services:
     ports:
       - 6379:6379
       - 8001:8001
+
+  rabbitmq:
+    image: 'rabbitmq:3.12.4-alpine'
+    container_name: 'microservices-test-rabbitmq'
+    ports:
+      - 5672:5672
+      - 15672:15672

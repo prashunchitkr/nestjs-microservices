@@ -1,10 +1,6 @@
 import { Module } from '@nestjs/common';
 
-import {
-  AUTH_MICROSERVICE,
-  registerRedisClientOptions,
-  rootConfig,
-} from '@/shared';
+import { AUTH_QUEUE, registerRMQClientOptions, rootConfig } from '@/shared';
 import { ConfigModule } from '@nestjs/config';
 import { ClientsModule } from '@nestjs/microservices';
 import { PaymentController } from './payment.controller';
@@ -16,9 +12,7 @@ import { PaymentService } from './payment.service';
       isGlobal: true,
       load: [rootConfig],
     }),
-    ClientsModule.registerAsync(
-      registerRedisClientOptions([AUTH_MICROSERVICE])
-    ),
+    ClientsModule.registerAsync(registerRMQClientOptions([AUTH_QUEUE])),
   ],
   controllers: [PaymentController],
   providers: [PaymentService],
