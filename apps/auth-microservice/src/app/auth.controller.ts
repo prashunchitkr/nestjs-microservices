@@ -1,6 +1,6 @@
 import { CREATE_USER, CreateUserDto, GET_USER } from '@/shared';
 import { Controller, ParseUUIDPipe, ValidationPipe } from '@nestjs/common';
-import { EventPattern, MessagePattern, Payload } from '@nestjs/microservices';
+import { MessagePattern, Payload } from '@nestjs/microservices';
 import { AppService } from './auth.service';
 
 @Controller()

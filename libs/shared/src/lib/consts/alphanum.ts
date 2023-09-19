@@ -9,3 +9,4 @@ export const APPLICATION_JSON = 'application/json';
 
 export const AUTH_QUEUE = 'AUTH_QUEUE' as const;
 export const PAYMENT_QUEUE = 'PAYMENT_QUEUE' as const;
+export type Queue = typeof AUTH_QUEUE | typeof PAYMENT_QUEUE;
