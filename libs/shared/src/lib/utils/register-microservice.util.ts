@@ -1,6 +1,6 @@
 import { ConfigService } from '@nestjs/config';
 import { ClientsProviderAsyncOptions, Transport } from '@nestjs/microservices';
-import { RabbitMQConfig, configKeys } from '../configuration';
+import { RabbitMQConfig, configKeys } from '../config';
 import { AUTH_QUEUE, PAYMENT_QUEUE } from '../consts';
 
 type Queue = typeof AUTH_QUEUE | typeof PAYMENT_QUEUE;

@@ -1,7 +1,7 @@
 import { INestApplication } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
-import { RabbitMQConfig, configKeys } from '../configuration';
+import { RabbitMQConfig, configKeys } from '../config';
 import { type Queue } from '../consts';
 
 export const setupAppRmq = (app: INestApplication, queue: Queue) => {
